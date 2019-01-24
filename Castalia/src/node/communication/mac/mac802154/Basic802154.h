@@ -47,7 +47,7 @@ enum Mac802154Timers {
 };
 
 class Basic802154: public VirtualMac {
- private:
+ protected:
     /*--- A map from int value of state to its description (used in debug) ---*/
 	map<int,string> stateDescr;
 
@@ -140,7 +140,7 @@ class Basic802154: public VirtualMac {
 
 	int associatedPAN;	// ID of current PAN (-1 if not associated)
 
-  protected:
+//   protected: // GAMBIARRA
 
 	/*--- Interface functions of the 802.15.4 MAC ---*/
 	Basic802154Packet *newConnectionRequest(int);
