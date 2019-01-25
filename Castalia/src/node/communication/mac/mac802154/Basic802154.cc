@@ -494,7 +494,7 @@ void Basic802154::fromRadioLayer(cPacket * pkt, double rssi, double lqi)
 		case MAC_802154_ACK_PACKET:{
 			if (rcvPacket->getDstID() != SELF_MAC_ADDRESS)
 				break;
-			handleAckPacket(rcvPacket);
+			handleAckPacket(rcvPacket,rssi,lqi);
 			break;
 		}
 
@@ -533,7 +533,7 @@ void Basic802154::fromRadioLayer(cPacket * pkt, double rssi, double lqi)
 	}
 }
 
-void Basic802154::handleAckPacket(Basic802154Packet * rcvPacket)
+void Basic802154::handleAckPacket(Basic802154Packet * rcvPacket,double rssi, double lqi)
 {
 	if (currentPacket == NULL) {
 		trace() << "WARNING received ACK packet while currentPacket == NULL";

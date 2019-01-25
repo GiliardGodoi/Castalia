@@ -8,8 +8,15 @@
 #include "Basic802154Packet_m.h"
 
 class CrossLayerMAC802154: public Basic802154 {
-
     protected:
+        /*-- Attributes to evaluate taxaMAC rate --*/
+        int window;
+        int currentAckCount;
+        int currentPacketCount;
+        int sequenceRecordedTaxaMAC;
+
+        int totalMACPacketsTransmitted;
+        int totalMACAcksReceived;
 
     /*
     * Por enquanto não vamos sobrescrever este método aqui 
@@ -20,10 +27,29 @@ class CrossLayerMAC802154: public Basic802154 {
 	    virtual void startup();
 	    virtual void timerFiredCallback(int);
 	    virtual void finishSpecific();
+
+        virtual void handleAckPacket(Basic802154Packet *,double,double);
+        virtual void transmitCurrentPacket();
         
         /*--- General desicions ---*/
 	    //virtual bool acceptNewPacket(Basic802154Packet *);
 	    //virtual void transmissionOutcome(Basic802154Packet *, bool, string);
+
+        /*-- Methods that implements 'taxaMAC' rate --*/
+        void handleTaxaMAC(float);
+
+        void countPacketTransmission();
+        int getCurrentPacketCount();
+        void resetCurrentPacketCount();
+
+        void setAckResult(int);
+        int getCurrentAckCount();
+        void resetCurrentAckCount();
+
+        void countTaxaMACRecord();
+
+        void evaluateTaxaMAC();
+        bool isWindowReached();
 };
 
 #endif // CROSS_LAYER_MAC_802154_H

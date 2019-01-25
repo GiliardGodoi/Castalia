@@ -105,7 +105,7 @@ class Basic802154: public VirtualMac {
 
 	void readIniFileParameters(void);
 	void setMacState(int newState);
-	void handleAckPacket(Basic802154Packet *);
+	void handleAckPacket(Basic802154Packet*,double,double);
 	void performCSMACA();
 	void attemptTransmission(const char *);
 	void transmitCurrentPacket();
