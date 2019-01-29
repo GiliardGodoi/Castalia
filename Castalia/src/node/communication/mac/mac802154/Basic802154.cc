@@ -568,6 +568,7 @@ void Basic802154::handleAckPacket(Basic802154Packet * rcvPacket,double rssi, dou
 				collectPacketHistory("NoAck");
 				attemptTransmission("Wrong SeqNum in Ack");
 			}
+			trace() << "Inside Basic802154";
 			break;
 		}
 

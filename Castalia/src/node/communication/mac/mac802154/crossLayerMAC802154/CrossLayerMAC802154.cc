@@ -1,4 +1,3 @@
-
 #include "CrossLayerMAC802154.h"
 
 Define_Module(CrossLayerMAC802154);
@@ -50,7 +49,7 @@ void CrossLayerMAC802154::finishSpecific() {
  * REIMPLEMENTATIONS FROM 802.15.4 METHODS 
  */
 
-void CrossLayerMAC802154::handleAckPacket(Basic802154Packet* rcvPacket, double rssi, double lqi)
+void CrossLayerMAC802154::handleAckPacket(Basic802154Packet * rcvPacket, double rssi, double lqi)
 {
     if(currentPacket != NULL)
     {
@@ -66,7 +65,6 @@ void CrossLayerMAC802154::handleAckPacket(Basic802154Packet* rcvPacket, double r
         }
 
     }
-
     Basic802154::handleAckPacket(rcvPacket,rssi,lqi);
 }
 
@@ -106,10 +104,10 @@ void CrossLayerMAC802154::transmitCurrentPacket()
 		if (currentPacket->getMac802154PacketType() == MAC_802154_DATA_PACKET) {
 			if (macState == MAC_STATE_CAP) collectOutput("pkt TX state breakdown", "Contention");
 			else collectOutput("pkt TX state breakdown", "Contention-free");
-
-            //Count the transmissions for taxaMAC rate, only if the packet is a DATA_PACKET
-			countPacketTransmission();
 		}
+
+        //Count the transmissions for taxaMAC rate, only if the packet is a DATA_PACKET
+        countPacketTransmission();
 
 		//decrement retry counter, set transmission end timer and modify mac and radio states.
 		currentPacketRetries--;
@@ -140,6 +138,7 @@ void CrossLayerMAC802154::handleTaxaMAC(float taxaMAC)
 void CrossLayerMAC802154::countPacketTransmission()
 {
     currentPacketCount += 1;
+    trace() << "CountingPacketTransmission    " << currentPacketCount;
 }
 
 int CrossLayerMAC802154::getCurrentPacketCount()
@@ -158,9 +157,9 @@ void CrossLayerMAC802154::setAckResult(int result)
     int previousAckCount = currentAckCount;
 
     if(result == 0){
-        currentAckCount += result;
+        currentAckCount += 0;
     }else if(result == 1){
-        currentAckCount += result;
+        currentAckCount += 1;
     } else {
         currentAckCount += 1;
     }
@@ -190,6 +189,7 @@ void CrossLayerMAC802154::evaluateTaxaMAC()
     int totalPackets = getCurrentPacketCount();
 
     float taxaMAC = (float) totalAck/totalPackets;
+    taxaMAC *= 100;
 
     handleTaxaMAC(taxaMAC);
 

@@ -100,17 +100,17 @@ class Basic802154: public VirtualMac {
 	Basic802154Packet *beaconPacket;
 	Basic802154Packet *currentPacket;
 
-	void fromNetworkLayer(cPacket *, int);
-	void fromRadioLayer(cPacket *, double, double);
+	virtual void fromNetworkLayer(cPacket *, int);
+	virtual void fromRadioLayer(cPacket *, double, double);
 
 	void readIniFileParameters(void);
-	void setMacState(int newState);
-	void handleAckPacket(Basic802154Packet*,double,double);
-	void performCSMACA();
-	void attemptTransmission(const char *);
-	void transmitCurrentPacket();
-	void collectPacketHistory(const char * s);
-	void clearCurrentPacket(const char * s = NULL, bool success = false);
+	virtual void setMacState(int newState);
+	virtual void handleAckPacket(Basic802154Packet*,double,double);
+	virtual void performCSMACA();
+	virtual void attemptTransmission(const char *);
+	virtual void transmitCurrentPacket();
+	virtual void collectPacketHistory(const char * s);
+	virtual void clearCurrentPacket(const char * s = NULL, bool success = false);
 
      /*--- The .ned file's parameters ---*/
 	bool printStateTransitions;
