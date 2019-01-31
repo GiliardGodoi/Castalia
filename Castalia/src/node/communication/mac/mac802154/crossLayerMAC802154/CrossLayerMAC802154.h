@@ -6,6 +6,7 @@
 
 #include "Basic802154.h"
 #include "Basic802154Packet_m.h"
+#include "ThroughputCrossLayerMsg_m.h"
 
 class CrossLayerMAC802154: public Basic802154 {
     protected:

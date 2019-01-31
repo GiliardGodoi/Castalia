@@ -1,8 +1,9 @@
 #ifndef _THROUGHPUT_CROSS_LAYER_H_
 #define _THROUGHPUT_CROSS_LAYER_H_
 
-#include "VirtualApplication.h"
 #include <map>
+#include "VirtualApplication.h"
+#include "ThroughputCrossLayerMsg_m.h"
 
 using namespace std;
 

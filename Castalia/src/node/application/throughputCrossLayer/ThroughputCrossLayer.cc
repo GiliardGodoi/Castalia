@@ -125,5 +125,22 @@ void ThroughputCrossLayer::handleRadioControlMessage(RadioControlMessage * radio
 
 int ThroughputCrossLayer::handleControlCommand(cMessage * msg)
 {
-    return 0;
+	ThroughputCrossLayerMsg *cmd = check_and_cast <ThroughputCrossLayerMsg*>(msg);
+
+	int type = cmd->getType();
+	
+	switch(type)
+	{
+		case TAXA_MAC_RATE :
+		{
+			double taxaMAC = cmd->getParameter();
+			trace() << "APP_TAXAMAC    " << taxaMAC;
+			break;
+		}
+	}
+
+
+    delete cmd;
+
+	return 3;
 }

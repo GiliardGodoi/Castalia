@@ -67,6 +67,12 @@ void VirtualApplication::initialize()
 		declareHistogram("Application level latency, in ms", 0, latencyMax, latencyBuckets);
 }
 
+int VirtualApplication::handleControlCommand(cMessage * msg)
+{
+	trace() << "WARNING: handleControlCommand not defined in this module";
+	return 0;
+}
+
 void VirtualApplication::handleMessage(cMessage * msg)
 {
 	int msgKind = msg->getKind();
@@ -83,6 +89,13 @@ void VirtualApplication::handleMessage(cMessage * msg)
 		{
 			disabled = false;
 			startup();
+			break;
+		}
+
+		case APPLICATION_CONTROL_COMMAND:
+		{
+			if(handleControlCommand(msg))
+				return ;
 			break;
 		}
 

@@ -47,3 +47,7 @@ void BypassRouting::fromMacLayer(cPacket * pkt, int srcMacAddress, double rssi, 
 	}
 }
 
+void BypassRouting::handleRadioControlMessage(cMessage * msg)
+{
+
+}

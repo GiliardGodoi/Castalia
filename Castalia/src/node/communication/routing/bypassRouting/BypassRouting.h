@@ -22,6 +22,7 @@ class BypassRouting: public VirtualRouting {
  protected:
 	void fromApplicationLayer(cPacket *, const char *);
 	void fromMacLayer(cPacket *, int, double, double);
+	void handleRadioControlMessage(cMessage * msg);
 };
 
 #endif				//BYPASSROUTINGMODULE

@@ -1,11 +1,11 @@
 Castalia| what:CrossLayerMAC,GTSoff,setRate,setPower (1)
-Castalia| when:2019-01-29 02:11
+Castalia| when:2019-01-31 11:55
 Castalia| repeat:0 label:CrossLayerMAC,GTSoff,setRate,setPower
 Castalia|		module:SN.Simulation
 Castalia|			simple output name:Execution time, seconds
-Castalia|				1.708
+Castalia|				1.584
 Castalia|			simple output name:Execution ratio (simtime/realtime)
-Castalia|				29.8612309813
+Castalia|				32.1988525985
 Castalia|	module:SN.wirelessChannel
 Castalia|		histogram name:Fade depth distribution
 Castalia|		histogram_min:-50 histogram_max:15

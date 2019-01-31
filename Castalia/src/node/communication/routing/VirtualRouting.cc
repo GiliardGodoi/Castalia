@@ -103,6 +103,13 @@ void VirtualRouting::handleMessage(cMessage * msg)
 			break;
 		}
 
+		case APPLICATION_CONTROL_COMMAND:
+		{
+			trace() << "Received command and sending to APP";
+			toApplicationLayer(msg);
+			return; // msg not deleted
+		}
+
 		case APPLICATION_PACKET:
 		{
 			ApplicationPacket *appPacket = check_and_cast <ApplicationPacket*>(msg);

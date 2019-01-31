@@ -133,6 +133,13 @@ void CrossLayerMAC802154::transmitCurrentPacket()
 void CrossLayerMAC802154::handleTaxaMAC(float taxaMAC)
 {
     trace() << "TaxaMAC    " << taxaMAC;
+
+    ThroughputCrossLayerMsg *cmd = new ThroughputCrossLayerMsg("ThroughputCrossLayerCommand", APPLICATION_CONTROL_COMMAND);
+    
+    cmd->setType(TAXA_MAC_RATE);
+    cmd->setParameter(taxaMAC);
+
+    toNetworkLayer(cmd);
 }
 
 void CrossLayerMAC802154::countPacketTransmission()
