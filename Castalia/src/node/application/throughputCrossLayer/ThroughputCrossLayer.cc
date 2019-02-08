@@ -5,13 +5,9 @@ Define_Module(ThroughputCrossLayer);
 void ThroughputCrossLayer::startup()
 {
     /* CL startup */
-    arrayPowerTx[0] = -25;
-    arrayPowerTx[1] = -20;
-    arrayPowerTx[2] = -15;
-    arrayPowerTx[3] = -12;
-    arrayPowerTx[4] = -10;
-
     currentPowerTx = -10;
+
+	transmissionPowerControl = TPCBinomial(4,0.7);
 
     // default startup
    	packet_rate = par("packet_rate");
@@ -139,6 +135,8 @@ int ThroughputCrossLayer::handleControlCommand(cMessage * msg)
 		}
 	}
 
+	int power = transmissionPowerControl.defineTransmissionPower(msg);
+	debug() << "TPC_POWER    " << power << "\t";
 
     delete cmd;
 

@@ -5,6 +5,8 @@
 #include "VirtualApplication.h"
 #include "ThroughputCrossLayerMsg_m.h"
 
+#include "./tpcStrategy/TPCBinomial.h"
+
 using namespace std;
 
 enum ThroughputCrossLayerTimers {
@@ -27,8 +29,9 @@ class ThroughputCrossLayer: public VirtualApplication {
         map<long,int> bytesReceived;
         map<long,int> packetsSent;
 
+        TPCStrategy transmissionPowerControl;
+
     protected:
-        int arrayPowerTx[5];
         int currentPowerTx;
 
         void startup();
@@ -47,5 +50,3 @@ class ThroughputCrossLayer: public VirtualApplication {
 };
 
 #endif
-
-
