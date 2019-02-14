@@ -1,3 +1,5 @@
 rm Castalia-Trace.txt
 
-Castalia -c CrossLayerMAC,GTSoff,setRate,setPower -r 1 -d
+Castalia -c General,CrossLayerMAC,GTSoff,setRate,setPower -r 1 -d
+
+rm *.tmp
