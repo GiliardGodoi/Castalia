@@ -5,7 +5,9 @@
 #include "VirtualApplication.h"
 #include "ThroughputCrossLayerMsg_m.h"
 
+#include "./tpcStrategy/TPCStrategy.h"
 #include "./tpcStrategy/TPCBinomial.h"
+#include "./tpcStrategy/TPCUniforme.h"
 
 using namespace std;
 
@@ -13,8 +15,14 @@ enum ThroughputCrossLayerTimers {
     SEND_PACKET = 1
 };
 
+enum TPCStrategiesID {
+    TPC_DEFAULT = 0,
+    TPC_BINOMIAL = 1,
+    TPC_UNIFORME = 2,
+};
+
 class ThroughputCrossLayer: public VirtualApplication {
-    private:
+    protected:
         double packet_rate;
         double startupDelay;
         double delayLimit;
@@ -29,11 +37,6 @@ class ThroughputCrossLayer: public VirtualApplication {
         map<long,int> bytesReceived;
         map<long,int> packetsSent;
 
-        TPCStrategy transmissionPowerControl;
-
-    protected:
-        int currentPowerTx;
-
         void startup();
         void fromNetworkLayer(ApplicationPacket *, const char *, double, double);
         void timerFiredCallback(int);
@@ -42,6 +45,18 @@ class ThroughputCrossLayer: public VirtualApplication {
         void handleRadioControlMessage(RadioControlMessage *);
         int handleControlCommand(cMessage * msg);
 
+
+        /* Transmission Power Control Strategies 
+
+            Variables and methods below are used to Transmission Power Control algorithms
+            The different strategies are implemented with design patterns' Strategy
+        */
+        TPCStrategy * TPC;
+        int strategyID; // 
+        double probability; //for Binomial Distribution TPC
+        int defaultPowerTransmission;
+        int currentPowerTx;
+        
     public:
         int getPacketsSent(int addr) { return packetsSent[addr]; }
         int getPacketsReceived(int addr) { return packetsReceived[addr]; }

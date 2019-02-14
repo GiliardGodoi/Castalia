@@ -4,11 +4,6 @@ Define_Module(ThroughputCrossLayer);
 
 void ThroughputCrossLayer::startup()
 {
-    /* CL startup */
-    currentPowerTx = -10;
-
-	transmissionPowerControl = TPCBinomial(4,0.7);
-
     // default startup
    	packet_rate = par("packet_rate");
 	startupDelay = par("startupDelay");
@@ -29,7 +24,35 @@ void ThroughputCrossLayer::startup()
 	else
 		trace() << "Not sending packets";
 
-	declareOutput("Packets received per node"); 
+	declareOutput("Packets received per node");
+
+
+	/* TPC start up variables */
+	strategyID = par("strategyID");
+	defaultPowerTransmission = par("defaultPowerTransmission");
+	probability = par("probability");
+
+    currentPowerTx = defaultPowerTransmission;
+	// TPC = new TPCBinomial(4, 0.5);
+	// TPC = new TPCBinomial();
+	// TPC = new TPCDistUniforme(4);
+	switch (strategyID)
+	{
+		case TPC_DEFAULT:
+			debug() << "DEFINE_DEFAULT_TPC  " << strategyID << "\n";
+			TPC = new TPCStrategy(defaultPowerTransmission);
+			break;
+
+		case TPC_BINOMIAL:
+			debug() << "DEFINE_BINOMIAL_TPC  " << strategyID << " PROBABILITY  " << probability << "\n";
+			TPC = new TPCBinomial(4,probability);
+			break;
+
+		case TPC_UNIFORME:
+			debug() << "DEFINE_UNIFORME_TPC  " << strategyID << "\n";
+			TPC = new TPCDistUniforme(4);
+			break;
+	}
 }
 
 void ThroughputCrossLayer::fromNetworkLayer(ApplicationPacket * rcvPacket,const char *source, double rssi, double lqi)
@@ -135,10 +158,12 @@ int ThroughputCrossLayer::handleControlCommand(cMessage * msg)
 		}
 	}
 
-	int power = transmissionPowerControl.defineTransmissionPower(msg);
-	debug() << "TPC_POWER    " << power << "\t";
+	int newTxPower = TPC->defineTransmissionPower(msg);
+	// debug() << "TPC_POWER    " << newTxPower << "\t";
+
+	toNetworkLayer(createRadioCommand(SET_TX_OUTPUT,newTxPower));	
 
     delete cmd;
 
-	return 3;
+	return 2;
 }

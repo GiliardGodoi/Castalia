@@ -24,6 +24,11 @@ simple ThroughputCrossLayer like node.application.iApplication {
 	double latencyHistogramMax = default (200);
 	int latencyHistogramBuckets = default (10);
 
+	int strategyID = default(0);
+	double probability = default(0.5);
+	int defaultPowerTransmission =  default(-15);
+
+
  gates:
  	output toCommunicationModule;
 	output toSensorDeviceManager;

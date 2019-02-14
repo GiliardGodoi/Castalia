@@ -1,27 +1,24 @@
+
 #include "TPCBinomial.h"
 
-random_device TPCBinomial::rd;
-mt19937 TPCBinomial::gen(TPCBinomial::rd());
-binomial_distribution<> TPCBinomial::dis(4, 0.7);
 
-TPCBinomial::TPCBinomial(){
-    arrayPowerTx[0] = -25;
-    arrayPowerTx[1] = -20;
-    arrayPowerTx[2] = -15;
-    arrayPowerTx[3] = -12;
-    arrayPowerTx[4] = -10;
-}
+TPCBinomial::TPCBinomial() : binomialTries(4), probability(0.5)
+{
+    TPCBinomial(binomialTries, probability);
+};
 
-TPCBinomial::TPCBinomial(int N,double P){
+TPCBinomial::TPCBinomial(int N,double P) : binomialTries(N), probability(P), gen(rd()), dis(std::binomial_distribution<>(binomialTries,probability))
+{ };
 
-    arrayPowerTx[0] = -25;
-    arrayPowerTx[1] = -20;
-    arrayPowerTx[2] = -15;
-    arrayPowerTx[3] = -12;
-    arrayPowerTx[4] = -10;
+TPCBinomial::~TPCBinomial()
+{
+
 };
 
 int TPCBinomial::defineTransmissionPower(cMessage * msg)
 {
-    return 0;
+    int indice = dis(gen);
+    int power = arrayPowerTx[indice];
+
+    return power;
 }
