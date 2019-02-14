@@ -37,3 +37,6 @@ Castalia-Trace.txt
 # Others Castalia's stuff
 out
 CastaliaBin
+
+# VS code folder
+.vscode
